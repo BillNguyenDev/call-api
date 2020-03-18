@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 
 class ProductItem extends Component {
     render() {
+        var { product, index } = this.props;
+        var statusName = product.status ? 'còn Hàng' : "Hết Hàng";
+        var statusClass = product.status ? 'warning' : 'default';
         return (
             <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>Iphone 6S</td>
-                <td>500</td>
+                <td>{index + 1}</td>
+                <td>{product.id}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
                 <td>
-                    <span className="label bg-warning">
-                        Còn Hàng
-                        </span>
+                    <span className={`label bg-${statusClass}`}>
+                        {statusName}
+                    </span>
                 </td>
                 <td>
                     <button type="button" className="btn btn-success mr-10">
