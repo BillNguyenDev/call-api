@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { actDeleteProductRequest } from './../../actions'
+
 
 class ProductItem extends Component {
 
     onDelete = (id) => {
         if (confirm('Bạn chắc chắn muốn xóa?')) {//eslint-disable-line
-            this.props.onDelete(id);
+            this.props.onDeleteProduct(id);
         }
     }
     render() {
@@ -45,4 +47,13 @@ class ProductItem extends Component {
 
 }
 
-export default connect()(ProductItem);
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onDeleteProduct : id => {
+            dispatch(actDeleteProductRequest(id))
+        }
+    }
+}
+
+export default connect(null,mapDispatchToProps)(ProductItem);

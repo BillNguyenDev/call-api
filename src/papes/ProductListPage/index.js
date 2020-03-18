@@ -5,33 +5,15 @@ import { Link } from 'react-router-dom';
 import ProductList from './../../components/ProductList';
 import ProductItem from './../../components/ProductItem';
 
-
-import callApi from './../../utils/apiCaller';
+import { actFetchProductsRequest } from './../../actions'
 
 class ProductListPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: []
-        };
-    }
-    componentDidMount() {
-        callApi('products').then(res => {
-            this.setState({ products: res.data })
-        })
 
-    }
-    onDelete = (id) => {
-        var { products } = this.state;
-        callApi(`products/${id}`, 'DELETE', null).then(res => {
-            if (res.status === 200) {
-                products = products.filter((item) => item.id !== id);
-                this.setState({ products })
-            }
-        })
+    componentDidMount() {
+        this.props.fetchAllProducts();
     }
     render() {
-        var { products } = this.state;
+        var { products } = this.props;
         return (
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <Link to={'/product/add'} className="btn btn-info mb-10">
@@ -52,7 +34,6 @@ class ProductListPage extends Component {
                         key={index}
                         product={product}
                         index={index}
-                        onDelete={this.onDelete}
                     />
                 );
             })
@@ -67,5 +48,11 @@ const mapStateToProps = (state) => {
         products: state.products
     }
 }
-
-export default connect(mapStateToProps, null)(ProductListPage);
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        fetchAllProducts: () => {
+            dispatch(actFetchProductsRequest());
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListPage);
