@@ -1,24 +1,11 @@
-var initialSate = [
-    {
-        id: 1,
-        name: "Iphone 6 Plus",
-        price: 400,
-        status: true
-    },
-    {
-        id: 2,
-        name: "Iphone 7 Plus",
-        price: 500,
-        status: false
-    },
-    {
-        id: 3,
-        name: "Iphone 8 Plus",
-        price: 600,
-        status: false
-    }
+import callApi from './../utils/apiCaller';
 
-];
+
+var initialSate = [];
+
+callApi('products').then(res => {
+    initialSate = res.data.length > 0 ? res.data : [];
+})
 
 const products = (state = initialSate, action) => {
     switch (action.type) {
