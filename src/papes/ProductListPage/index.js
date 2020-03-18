@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import ProductList from './../../components/ProductList';
 import ProductItem from './../../components/ProductItem';
 class ProductListPage extends Component {
     render() {
-        const products = [];
+        var { products } = this.props;
         return (
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button type="button" className="btn btn-info mb-10">
@@ -33,5 +35,10 @@ class ProductListPage extends Component {
     
 }
 
+const mapStateToProps = (state) => {
+    return {
+        products: state.products
+    }
+}
 
-export default ProductListPage;
+export default connect(mapStateToProps,null)(ProductListPage);
